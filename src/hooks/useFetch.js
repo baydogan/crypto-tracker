@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useFetch = (url) => {
+const useFetch = (url, auto = true) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -28,18 +28,22 @@ const useFetch = (url) => {
         isMounted && setLoading(false);
       }
     };
-    const interval = setInterval(() => {
-      //her 5 saniyede bir güncel değerlerii çekmek için fetchData fonksiyonu çağırılıyor
+
+    if (auto) {
+      const interval = setInterval(() => {
+        //eğer auto parametresi true ise otomatik olarak her beş saniyede bir data çeker
+        fetchData(url);
+      }, 5000);
+    } else {
       fetchData(url);
-    }, 5000);
+    }
 
     return () => {
       // cleanup fonksiyonu
       isMounted = false;
       source.cancel();
-      clearInterval(interval);
     };
-  }, []);
+  }, [url]);
   return { data, loading, error };
 };
 
