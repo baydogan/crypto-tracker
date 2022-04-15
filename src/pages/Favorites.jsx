@@ -1,9 +1,12 @@
-import React from 'react';
+import { useFavoritesContext } from "../hooks/useContextHooks/useFavoritesContext";
 
 const Favorites = () => {
+
+    const { favorites, setFavorites } = useFavoritesContext();
+    console.log('object :>> ', favorites);
     return (
         <div>
-            FAV
+            <h1>Favorites</h1>
         </div>
     );
 }

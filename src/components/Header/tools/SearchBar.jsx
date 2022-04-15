@@ -1,10 +1,7 @@
-import { useSearchContext } from "../../hooks/useSearchContext";
+import { useOptionsContext } from "../../../hooks/useContextHooks/useOptionsContext";
 
 const Searchbar = () => {
-  const { search, setSearch } = useSearchContext();
-  const handleChange = (e) => {
-    setSearch(e.target.value);
-  };
+  const { search, setSearch } = useOptionsContext();
   return (
     <>
       <input
@@ -12,7 +9,7 @@ const Searchbar = () => {
         placeholder="Search for crypto currencies"
         type="text"
         value={search}
-        onChange={handleChange}
+        onChange={(e) => setSearch(e.target.value)}
       />
     </>
   );
