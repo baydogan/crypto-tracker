@@ -5,7 +5,7 @@ const Searchbar = () => {
   return (
     <>
       <input
-        className="px-3 rounded-sm py-2 border w-4/5 "
+        className="px-3 rounded-sm py-2 border w-4/5 md:w-2/5 "
         placeholder="Search for crypto currencies"
         type="text"
         value={search}

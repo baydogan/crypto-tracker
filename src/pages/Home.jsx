@@ -9,7 +9,6 @@ const Home = () => {
     <div className="max-w-7xl mx-auto p-3">
       {error && <div>{error}</div>}
       <CryptolistLayout />
-
       <Cryptonewslayout />
     </div>
   );

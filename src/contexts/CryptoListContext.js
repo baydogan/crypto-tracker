@@ -1,11 +1,29 @@
-import { createContext } from "react";
+import { createContext, useEffect,useState } from "react";
 import useFetch from "../hooks/useFetch";
 import { CoinList, searchCoin } from "../config/api";
-
+import useLocalStorage from "../hooks/useLocalStorage";
 export const CryptoListContext = createContext();
 
 export const CryptoListProvider = ({ children }) => {
-  const { data, loading, error } = useFetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&", true);
+  const [currency, setCurrency] = useLocalStorage("currency", "USD");
+  const [symbol, setSymbol] = useLocalStorage("symbol", "$");
+
+  useEffect(() => {
+    const currencySymbol = currency === "USD" ? "$" : "€";
+    setSymbol(currencySymbol);
+  }, [currency]);
+
+  const [url, setUrl] = useState(CoinList(currency));
+
+  useEffect(() => {
+    setUrl(CoinList(currency));
+  }, [currency]);
+
+  useEffect(() => {
+    console.log("url", url);
+  }, [url]);
+
+  const { data, loading, error } = useFetch(url, true);
   const {
     data: cryptoNews,
     loading: cryotoNewsLoading,
@@ -15,7 +33,20 @@ export const CryptoListProvider = ({ children }) => {
     false
   );
   return (
-    <CryptoListContext.Provider value={{ data, loading, error, cryptoNews, cryotoNewsLoading, cryptoNewsError }}>
+    <CryptoListContext.Provider
+      value={{
+        data,
+        loading,
+        error,
+        cryptoNews,
+        cryotoNewsLoading,
+        cryptoNewsError,
+        currency,
+        setCurrency,
+        symbol,
+        setSymbol,
+      }}
+    >
       {children}
     </CryptoListContext.Provider>
   );
