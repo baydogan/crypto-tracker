@@ -18,7 +18,6 @@ const useFetch = (url, auto = false) => {
         });
         if (isMounted) {
           setData(response.data);
-          console.log('updated')
         }
       } catch (error) {
         if (isMounted) {

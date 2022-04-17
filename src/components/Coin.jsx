@@ -23,7 +23,7 @@ const Coin = ({ coin }) => {
   return (
     <>
       <Link to={`/${coin.id}`}>
-        <div className="flex items-center p-2 md:p-6 border-b border-slate-200 w-full cursor-pointer hover:bg-slate-200 transition-all duration-300 ">
+        <div className="flex items-center p-2 md:p-6 border-b border-slate-200 w-full cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-900 transition-all duration-300 dark:text-white dark:border-slate-900 ">
           <div className="w-1/12">
             <StarIcon
               onClick={handleFavorite}
@@ -45,8 +45,8 @@ const Coin = ({ coin }) => {
           <span
             className={
               coin.price_change_percentage_24h < 0
-                ? "text-red-600 w-1/6   text-xs md:text-base"
-                : "text-green-800 w-1/6 text-xs  md:text-base"
+                ? "text-red-600 dark:text-red-500 w-1/6   text-xs md:text-base"
+                : "text-green-800 dark:text-green-500 w-1/6 text-xs  md:text-base"
             }
           >
             {coin.price_change_percentage_24h.toFixed(2)}%

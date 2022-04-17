@@ -10,10 +10,16 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useState, useEffect } from "react";
+import ChartButton from "../components/common/ChartButton";
+import { chartDays } from "../config/chartData";
+import { useOptionsContext } from "../hooks/useContextHooks/useOptionsContext";
+import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, );
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const Chartbar = () => {
+const Chartbar = ({ name, prices }) => {
+  const { currency, darkMode } = useCryptoListContext();
+  const { days, setDays } = useOptionsContext();
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -22,13 +28,22 @@ const Chartbar = () => {
 
   useEffect(() => {
     setChartData({
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels:
+        prices &&
+        prices.map((price) => {
+          let date = new Date(price[0]);
+          let time =
+            date.getHours() > 12
+              ? `${date.getHours() - 12}: ${date.getMinutes()} PM`
+              : `${date.getHours()}:${date.getMinutes()} AM`;
+          return days === 1 ? time : date.toLocaleDateString();
+        }),
       datasets: [
         {
-          label: "My First dataset",
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: "rgba(75,192,192,1)",
-          backgroundColor:  "rgba(75,192,192,0.4)",
+          label: name,
+          data: prices && prices.map((price) => price[1]),
+          borderColor: darkMode ? '#ffc107' : '#ffc107',
+          backgroundColor: '#ffc107',
         },
       ],
     });
@@ -36,19 +51,41 @@ const Chartbar = () => {
       responsive: true,
       plugins: {
         legend: {
-          position: "top",
+          display: false,
         },
         title: {
           display: true,
-          text: "Chart.js Bar Chart",
+          text: `${name} ${days} days price in ${currency}`,
+        },
+      },
+      elements: {
+        point: {
+          radius: 1,
         },
       },
     });
-  }, []);
+  }, [name, prices]);
 
   return (
-    <div className="w-2/3">
-      <Line data={chartData} options={chartOptions} />
+    <div className="w-full h-full">
+      {name && (
+        <>
+          <Line data={chartData} options={chartOptions} />
+          <div className="flex gap-2 md:gap-8 mt-3 justify-center">
+            {chartDays.map((day, index) => (
+              <ChartButton
+                onClick={() => {
+                  setDays(day.value);
+                }}
+                key={index}
+                selected={days === day.value}
+              >
+                {day.label}
+              </ChartButton>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };

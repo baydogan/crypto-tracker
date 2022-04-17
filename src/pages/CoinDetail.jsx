@@ -1,39 +1,42 @@
 import { useParams } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
-import CoinInfo from "../layouts/CoinDetail/CoinInfo";
+import CoinInfo from "../layouts/CoinInfo";
 import Cryptonews from "../components/CryptoNews";
 import { HistoricalChart } from "../config/api";
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
+import { useOptionsContext } from "../hooks/useContextHooks/useOptionsContext";
 import Chartbar from "../components/ChartBar";
+import { cryptoNews, SingleCoin } from "../config/api";
 
 const Coindetail = () => {
   const { id } = useParams();
   const { currency } = useCryptoListContext();
-  const { data, loading, error } = useFetch(`https://api.coingecko.com/api/v3/coins/${id}`, false);
-  const { data: historicalData } = useFetch(HistoricalChart(id, 1, currency), false);
+  const { days } = useOptionsContext();
+  const { data, loading, error } = useFetch(SingleCoin(id), false);
+  const { data: historicalData } = useFetch(HistoricalChart(id, days, currency), false);
 
   const { name, image, market_data, description } = data;
-  const { data: relatedNews } = useFetch(
-    `https://newsapi.org/v2/everything?q=${id}&sortBy=popularity&apiKey=38a86b7e0bf74d13b68a07dfd9a30086`,
-    false
-  );
+  const { data: relatedNews } = useFetch(cryptoNews(id), false);
   const { articles } = relatedNews;
-
-  console.log("relatedNews :>> ", historicalData);
+  const { prices } = historicalData;
 
   return (
-    <div className="container mx-auto p-3 flex flex-col ">
-      <div className="flex flex-col md:flex-row items-center gap-3 p-3">
+    <div className="container mx-auto p-3 flex flex-col h-full ">
+      <div className="flex flex-col justify-center items-center">
         <CoinInfo name={name} image={image} market_data={market_data} description={description} />
-        <Chartbar />
+        {data && <Chartbar name={name} prices={prices} />}
       </div>
-      <h1 className=" text-2xl font-medium ml-10 mt-10 ">Related News</h1>
-      <div className="grid container mx-auto gap-y-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-5 pb-10">
-        {articles &&
-          articles.map((article, index) => {
-            return <Cryptonews key={index} article={article} />;
-          })}
-      </div>
+      {articles && (
+        <>
+          <h1 className=" text-2xl font-medium ml-10 mt-10 dark:text-white ">Related News</h1>
+          <div className="grid container mx-auto gap-y-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-5 pb-10">
+            {articles && articles.length > 0 &&
+              articles.map((article, index) => {
+                return <Cryptonews key={index} article={article} />;
+              })}
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -29,18 +29,23 @@ const CryptolistLayout = () => {
 
   useScrollToTop("smooth", currentPage);
 
-  console.log('data :>> ', data);
-
   return (
     <>
-      <h1 className="text-xl  ml-2 md:text-2xl font-medium mb-4 md:ml-4">All Crypto Currencies</h1>
+      {data.length > 0 && (
+        <h1 className="text-xl  ml-2 md:text-2xl font-medium mb-4 md:ml-4 dark:text-white">All Crypto Currencies</h1>
+      )}
       <div className="container mx-auto">
-      {data &&
-        currentItems.map((coin) => {
-          return <Coin key={coin.id} coin={coin} />;
-        })}
+        {data &&
+          currentItems.map((coin) => {
+            return <Coin key={coin.id} coin={coin} />;
+          })}
       </div>
-      <Pagination coinPerPage={coinPerPage} totalList={handleSearch.length} paginate={paginate} currentPage={currentPage} />
+      <Pagination
+        coinPerPage={coinPerPage}
+        totalList={handleSearch.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </>
   );
 };

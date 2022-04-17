@@ -19,10 +19,6 @@ export const CryptoListProvider = ({ children }) => {
     setUrl(CoinList(currency));
   }, [currency]);
 
-  useEffect(() => {
-    console.log("url", url);
-  }, [url]);
-
   const { data, loading, error } = useFetch(url, true);
   const {
     data: cryptoNews,
