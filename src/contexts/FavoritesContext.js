@@ -1,6 +1,9 @@
 import { createContext } from "react";
+
+//custom hooklar
 import useLocalStorage from "../hooks/useLocalStorage";
 
+//favoriler için oluşturulan global state
 export const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {

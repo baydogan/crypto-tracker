@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 
+//scroll işlemleri için oluşturulan custom hook
 const useScrollToTop = (behavior, trigger) => {
   useEffect(() => {
     window.scrollTo({

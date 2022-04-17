@@ -8,25 +8,32 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import { useState, useEffect } from "react";
+
+//componentler
 import ChartButton from "../components/common/ChartButton";
+import { Line } from "react-chartjs-2";
+
+//config
 import { chartDays } from "../config/chartData";
+
+//use context hookları
 import { useOptionsContext } from "../hooks/useContextHooks/useOptionsContext";
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
+
+import { useState, useEffect } from "react";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Chartbar = ({ name, prices }) => {
   const { currency, darkMode } = useCryptoListContext();
-  const { days, setDays } = useOptionsContext();
+  const { days, setDays } = useOptionsContext(); 
   const [chartData, setChartData] = useState({
     datasets: [],
   });
 
-  const [chartOptions, setChartOptions] = useState({});
+  const [chartOptions, setChartOptions] = useState({}); 
 
-  useEffect(() => {
+  useEffect(() => { // chart componentinin option ve data değerleri, component mount olduğunda değerler set ediliyor
     setChartData({
       labels:
         prices &&

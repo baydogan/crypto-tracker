@@ -5,7 +5,7 @@ const Searchbar = () => {
   const { search, setSearch } = useOptionsContext();
   const inputRef = useRef(null);
 
-  useEffect(() => {
+  useEffect(() => { //component mount edildiğinde search inputuna focus veriliyor
     inputRef.current.focus();
   }, []);
 

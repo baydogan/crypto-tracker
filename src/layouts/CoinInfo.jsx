@@ -1,4 +1,7 @@
+//helper fonksiyonlar
 import { numberWithCommas } from "../helpers";
+
+//use context hookları
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
 
 const Coininfo = ({ name, image, market_data }) => {

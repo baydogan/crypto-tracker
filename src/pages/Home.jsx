@@ -1,7 +1,11 @@
+//componentler
+
 import CryptolistLayout from "../layouts/CryptoListLayout";
 import Cryptonewslayout from "../layouts/CryptoNewsLayout";
-import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
 import Spinner from "../components/common/spinner/Spinner";
+import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
+import Error from "../components/common/Error";
+
 
 const Home = () => {
   const { data, loading, error, cryptoNews, cryotoNewsLoading, cryptoNewsError } = useCryptoListContext();
@@ -15,6 +19,7 @@ const Home = () => {
         </>
       )}
       {data.length === 0 && <Spinner />}
+      {error && <Error error={error} />}
     </div>
   );
 };

@@ -1,4 +1,7 @@
+//helper fonksiyonlar
 import { convertTime } from "../helpers/index";
+
+//harici kütüphane
 import { ExternalLink } from "react-external-link";
 
 const Cryptonews = ({ article }) => {

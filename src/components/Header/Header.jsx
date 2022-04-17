@@ -1,11 +1,14 @@
+//componentler
 import SearchBar from "./tools/SearchBar";
 import CryptoMenu from "./CryptoMenu";
 import CurrencySelect from "./tools/CurrencySelect";
-import { useLocation } from "react-router-dom";
 import Logo from "../common/Logo";
 import Darkmodeselect from "../common/DarkModeSelect";
+import { useLocation } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import { useCryptoListContext } from "../../hooks/useContextHooks/useCryptoListContext";
+
 const Header = () => {
   const location = useLocation();
   const { data } = useCryptoListContext();

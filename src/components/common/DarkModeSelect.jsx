@@ -1,8 +1,8 @@
 import { SunIcon, MoonIcon } from "@heroicons/react/solid";
 import { useOptionsContext } from "../../hooks/useContextHooks/useOptionsContext";
-import { useEffect } from "react";
 
-const Darkmodeselect = () => {
+
+const Darkmodeselect = () => { //dark mode seçmek için kullanılan komponent
   const { darkMode, removeTheme } = useOptionsContext();
 
   return (

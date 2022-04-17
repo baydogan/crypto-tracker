@@ -1,13 +1,19 @@
+//helper fonksiyonlar
 import { numberWithCommas } from "../helpers/index";
+
+// komponentler
 import { StarIcon } from "@heroicons/react/outline";
+import { Link } from "react-router-dom";
+
+// useContext hookları
 import { useFavoritesContext } from "../hooks/useContextHooks/useFavoritesContext";
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
-import { Link } from "react-router-dom";
 
 const Coin = ({ coin }) => {
   const { favorites, setFavorites } = useFavoritesContext();
   const { symbol } = useCryptoListContext();
 
+  // favorilere eklemek ve çıkarmak için 
   const handleFavorite = (e) => {
     e.preventDefault();
     const newFavorites = [...favorites];

@@ -1,3 +1,5 @@
+//detay çizelgesinde gösterilecek tarih verileri
+
 export const chartDays = [
   {
     label: "24 Hours",

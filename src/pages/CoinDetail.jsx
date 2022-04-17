@@ -1,12 +1,20 @@
 import { useParams } from "react-router-dom";
+
+//custom hooklar
 import useFetch from "../hooks/useFetch";
+
+//komponentler
+import Chartbar from "../components/ChartBar";
 import CoinInfo from "../layouts/CoinInfo";
 import Cryptonews from "../components/CryptoNews";
+
+//config dataları
 import { HistoricalChart } from "../config/api";
+import { cryptoNews, SingleCoin } from "../config/api";
+
+//useContext hookları
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
 import { useOptionsContext } from "../hooks/useContextHooks/useOptionsContext";
-import Chartbar from "../components/ChartBar";
-import { cryptoNews, SingleCoin } from "../config/api";
 
 const Coindetail = () => {
   const { id } = useParams();

@@ -28,7 +28,7 @@ const useFetch = (url, auto = false) => {
       }
     };
 
-    if (auto) {
+    if (auto) { //auto true ise otomatik olarak fetchData 5 saniyede bir çağrılır.
       const interval = setInterval(() => {
         fetchData(url);
       }, 5000);

@@ -1,17 +1,23 @@
+// componentler
 import Coin from "../components/Coin";
 import Pagination from "../components/Pagination";
+
+import { useMemo, useState,  } from "react";
+
+// custom hooklar
+import useScrollToTop from "../hooks/useScrollToTop";
+
+//usecontext hookları
 import { useOptionsContext } from "../hooks/useContextHooks/useOptionsContext";
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
-import { useMemo, useState, useEffect } from "react";
-import useScrollToTop from "../hooks/useScrollToTop";
 
 const CryptolistLayout = () => {
   const { data, loading, error, cryptoNews, cryotoNewsLoading, cryptoNewsError } = useCryptoListContext();
   const { search, setSearch } = useOptionsContext();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [coinPerPage, setCoinPerPage] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1); //default page  için state
+  const [coinPerPage, setCoinPerPage] = useState(20); //sayfa başına gösterilecek coin sayısı
 
-  const handleSearch = useMemo(() => {
+  const handleSearch = useMemo(() => { // arama işlemi için kullanılan fonksiyon
     if (search === "") {
       return data;
     } else {
@@ -21,13 +27,15 @@ const CryptolistLayout = () => {
       });
     }
   }, [data, search]);
-  const indexOfLastItem = currentPage * coinPerPage;
-  const indexOfFirstItem = indexOfLastItem - coinPerPage;
-  const currentItems = handleSearch.slice(indexOfFirstItem, indexOfLastItem);
+
+  //pagination işlemi için kullanılan değişkenler. ilk index ve son index üzerinde mevcut gösterilecek coin listesi bulunur.
+  const indexOfLastItem = currentPage * coinPerPage; 
+  const indexOfFirstItem = indexOfLastItem - coinPerPage; 
+  const currentItems = handleSearch.slice(indexOfFirstItem, indexOfLastItem); 
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  useScrollToTop("smooth", currentPage);
+  useScrollToTop("smooth", currentPage); // mevcut sayfa değiştiğinde useScrollToTop fonksiyonu çalıştırılır. smooth bir şekilde yukarı scroll edilir.
 
   return (
     <>

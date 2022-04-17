@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+
+//local storageta state tutmak için oluşturulan custom hook
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     if (typeof window === "undefined") {

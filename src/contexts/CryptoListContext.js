@@ -1,21 +1,27 @@
-import { createContext, useEffect,useState } from "react";
-import useFetch from "../hooks/useFetch";
-import { CoinList, searchCoin } from "../config/api";
-import useLocalStorage from "../hooks/useLocalStorage";
-export const CryptoListContext = createContext();
+import { createContext, useEffect, useState } from "react";
 
-export const CryptoListProvider = ({ children }) => {
+//custom hooklar
+import useLocalStorage from "../hooks/useLocalStorage";
+import useFetch from "../hooks/useFetch";
+
+//api endpointleri
+import { CoinList, allCryptoNews } from "../config/api";
+
+
+
+export const CryptoListContext = createContext();
+export const CryptoListProvider = ({ children }) => { //crypto listesiyle birlikte global olarak state üzerinde tutulan para birimi ve sembol değerleri. 
   const [currency, setCurrency] = useLocalStorage("currency", "USD");
   const [symbol, setSymbol] = useLocalStorage("symbol", "$");
 
-  useEffect(() => {
+  useEffect(() => { //para birimi ve para simggesinin değişimi
     const currencySymbol = currency === "USD" ? "$" : "€";
     setSymbol(currencySymbol);
   }, [currency]);
 
   const [url, setUrl] = useState(CoinList(currency));
 
-  useEffect(() => {
+  useEffect(() => { //para birimi değiştirilirse endpoint değiştirilir.
     setUrl(CoinList(currency));
   }, [currency]);
 
@@ -25,7 +31,7 @@ export const CryptoListProvider = ({ children }) => {
     loading: cryotoNewsLoading,
     error: cryptoNewsError,
   } = useFetch(
-    "https://newsapi.org/v2/everything?q=Blockchain&sortBy=popularity&apiKey=38a86b7e0bf74d13b68a07dfd9a30086",
+    `https://newsapi.org/v2/everything?q=Blockchain&sortBy=popularity&apiKey=${process.env.REACT_APP_KEY}`,
     false
   );
   return (

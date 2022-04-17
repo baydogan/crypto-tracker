@@ -1,4 +1,4 @@
-const Chartbutton = ({ children, onClick, selected }) => {
+const Chartbutton = ({ children, onClick, selected }) => { //detay sayfasındaki grafikte tarihleri seçmek için kullanılan buttonlar
   return (
     <>
       <button

@@ -1,4 +1,6 @@
 import { useCryptoListContext } from "../hooks/useContextHooks/useCryptoListContext";
+
+//komponentler
 import Cryptonews from "../components/CryptoNews";
 
 const Cryptonewslayout = () => {
