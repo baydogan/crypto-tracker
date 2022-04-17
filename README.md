@@ -30,3 +30,6 @@ cd crypo-tracker
 npm i
 npm run start
 ```
+## Demo
+
+https://crypto-tracker-baydogan.vercel.app/
